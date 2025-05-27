@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PnW Target Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>navigator.serviceWorker.register("service-worker.js")</script> 
+<link rel="manifest" href="manifest.json" />    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <center>
+        <h1>Politics & War <span style="color: red;">Raiders' Tool</span></h1>
+        <hr>
+        &nbsp;
+        <form style="font-size: 1.2rem;">
+            <div>
+                <label for="nation_id">Your Nation ID:</label>
+                <input type="number" id="nation_id" name="nation_id" required>
+            </div>
+            <br>
+            <div>
+                <button style="font-size: 1.2rem; background-color: green; margin-right: 20px;" type="submit" formaction="/raid" formmethod="post" id="raid-btn">Find Raid Targets</button>
+                <button style="font-size: 1.2rem; background-color: brown;" type="submit" formaction="/beige" formmethod="post" id="beige-btn">Find Beige Targets</button>
+                <div id="nation-warning" style="color: red; display: none;">Nation ID is required</div>
+            </div>
+        </form>
+
+        <div id="loading-indicator" style="display:none; text-align: center; padding: 20px; border: 1px solid #ccc; margin-top: 20px; background-color: #f9f9f9;">
+            <p><strong>Please wait. Don't click any button or reload this page.</strong><br>Search process can take up to 3 minutes to get live data from Politics & War server.</p>
+            <div class="spinner" style="margin: 20px auto;"></div> <!-- This div will be styled into a spinner with CSS -->
+            <p>Loading up to 5,000 nations data...</p>
+        </div>
+
+        <footer style="margin-top: 50px;">
+            <hr>
+            <p>Built with ❤️ by <a style="color: green;" href="https://politicsandwar.com/nation/id=684074" target="_blank">Bako Gayo</a>, the dastard <a style="color: red;" href="https://politicsandwar.com/alliance/id=10304" target="_blank">Samurai</a>.</p>
+        </footer>
+    </center>
+
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(e) {
+                if (!validateForm()) {
+                    e.preventDefault();
+                    return false;
+                }
+                $('#loading-indicator').show();
+                return true;
+            });
+
+            function validateForm() {
+                const nationId = $('#nation_id').val();
+                if (!nationId) {
+                    $('#nation-warning').show();
+                    return false;
+                }
+                $('#nation-warning').hide();
+                return true;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Target Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <center><h3>{{ search_title }}</h3></center>
+
+    {% if error_message %}
+        <p style="color: red;">Error: {{ error_message }}</p>
+    {% endif %}
+
+    {% if targets %}
+    <div class="cards-container">
+        {% for target in targets %}
+        <div class="nation-card">
+            <h3><a href="{{ target.nation_url }}" target="_blank">{{ target.name }} <!--({{ target.id }})--></a></h3>
+            <p><strong>Alliance:</strong> {{ target.alliance if target.alliance else 'N/A' }}</p>
+            <p><strong>Score:</strong> {{ "{:,.2f}".format(target.score) if target.score is not none else 'N/A' }}</p>
+            <p><strong>GNI:</strong> ${{ "{:,.0f}".format(target.gni) if target.gni is not none else 'N/A' }}</p>
+            <p><strong>Daily Income:</strong> ${{ "{:,.0f}".format(target.daily_income) if target.daily_income is not none else 'N/A' }}</p>
+            <!-- disable City Count and Infra for now
+            <p><strong>City Count:</strong> {{ target.city_count if target.city_count is not none else 'N/A' }}</p>
+            <p><strong>Infrastructure:</strong> {{ "{:,.0f}".format(target.infrastructure) if target.infrastructure is defined and target.infrastructure is not none else 'N/A' }}</p>
+            -->
+            <p><strong>Defensive Wars:</strong> {{ target.defensive_wars_count if target.defensive_wars_count is not none else 'N/A' }}</p>
+            
+            {% if target.beige_turns is defined %}
+            <p style="background-color: brown; color: white;"><strong>Beige Turns:</strong> {{ target.beige_turns }}</p>
+            {% endif %}
+
+            <p><strong>7d Stolen:</strong> ${{ "{:,.0f}".format(target.seven_days_stolen) if target.seven_days_stolen is not none else 'N/A' }}</p>
+            {% if target.one_day_stolen is defined %}
+            <p><strong>1d Stolen:</strong> ${{ "{:,.0f}".format(target.one_day_stolen) if target.one_day_stolen is not none else 'N/A' }}</p>
+            {% endif %}
+            
+            <!-- disable Last Stolen Info for now
+            <p><strong>Last Stolen Info:</strong> 
+                {% if target.money_stolen_recent_def_war > 0 %}
+                    ${"{:,.0f}".format(target.money_stolen_recent_def_war)} - {{ target.last_stolen_time_ago_str }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </p>
+            -->
+            
+            <div class="card-section">
+                <h4>Military</h4>
+                <p>Sol: {{ "{:,.0f}".format(target.soldiers) if target.soldiers is not none else 'N/A' }} | Tnks: {{ "{:,.0f}".format(target.tanks) if target.tanks is not none else 'N/A' }} | Air: {{ "{:,.0f}".format(target.aircraft) if target.aircraft is not none else 'N/A' }} | Shps: {{ "{:,.0f}".format(target.ships) if target.ships is not none else 'N/A' }}</p>
+                <p>Miss: {{ "{:,.0f}".format(target.missiles) if target.missiles is not none else 'N/A' }} | Nukes: {{ "{:,.0f}".format(target.nukes) if target.nukes is not none else 'N/A' }} | Spies: {{ "{:,.0f}".format(target.spies) if target.spies is not none else 'N/A' }}</p>
+            </div>
+            
+            <div class="card-section">
+                <h4>Commerce</h4>
+                <p>Mrkt: {{ target.supermarket if target.supermarket is not none else 'N/A' }} | Bnk: {{ target.bank if target.bank is not none else 'N/A' }} | Mall: {{ target.shopping_mall if target.shopping_mall is not none else 'N/A' }}</p>
+                <p>Stad: {{ target.stadium if target.stadium is not none else 'N/A' }} | Sub: {{ target.subway if target.subway is not none else 'N/A' }}</p>
+            </div>
+            
+            <a href="{{ target.nation_url }}" class="button view-button" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">View Nation</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% elif not error_message %} 
+        <p>No targets found matching your criteria.</p>
+    {% endif %}
+    <br>
+    <center><a href="/"><button style="font-size: 1.2rem; background-color: black; color: white;">Back to Search</button></a></center>
+</body>
+</html>

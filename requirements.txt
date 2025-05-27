@@ -1,0 +1,5 @@
+requests>=2.25.0
+tqdm>=4.50.0
+Flask
+python-dotenv
+gunicorn>=20.1.0

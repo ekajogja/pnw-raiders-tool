@@ -1,0 +1,152 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    color: #333;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+}
+
+input[type="number"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin-top: 10px;
+}
+
+a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.error-message { /* Class for error messages if we want specific styling */
+   color: red;
+   font-weight: bold;
+}
+
+/* Loading Spinner Styles */
+.spinner {
+    border: 6px solid #f3f3f3; /* Light grey border */
+    border-top: 6px solid #3498db; /* Blue border for the spinning part */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    /* Margin is already set to '20px auto' inline in the HTML, 
+       which centers it. That's fine. */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Optional: Ensure the loading indicator container has some reasonable styling if not already fully covered by inline styles */
+#loading-indicator {
+    /* Inline styles already set: display:none; text-align: center; padding: 20px; border: 1px solid #ccc; margin-top: 20px; background-color: #f9f9f9; */
+    /* You could add more here if needed, e.g., z-index if it ever gets obscured, but likely not necessary for this simple case. */
+}
+
+/* Card Layout Styles */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+    justify-content: center; /* Center cards if the last row is not full */
+}
+
+.nation-card {
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    background-color: #fff;
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column; /* Stack items vertically */
+}
+
+.nation-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.nation-card h3 a {
+    text-decoration: none;
+    color: #0056b3;
+}
+
+.nation-card p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.nation-card .card-section {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee; /* Separator for sections */
+}
+
+.nation-card .card-section h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.nation-card .view-button {
+    /* Styles are mostly inline in the HTML for simplicity,
+       but can be moved here or enhanced.
+       Ensure it looks like a button. */
+    text-align: center;
+}
