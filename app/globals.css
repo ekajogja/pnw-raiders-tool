@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border-color;
+  }
+  
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(5, 150, 105, 0.05) 0%, transparent 50%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply bg-success hover:bg-success/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .btn-back {
+    @apply bg-primary hover:bg-secondary text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 border border-border-color;
+  }
+  
+  .card {
+    @apply bg-card-bg border border-border-color rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 animate-fade-in;
+  }
+  
+  .input-field {
+    @apply bg-secondary border border-border-color rounded-lg px-4 py-3 text-text-primary placeholder-gray-400 focus:ring-2 focus:ring-accent focus:border-accent transition-colors;
+  }
+  
+  .military-stat {
+    @apply font-mono text-sm text-gray-300;
+  }
+  
+  .money-amount {
+    @apply font-mono font-semibold text-success;
+  }
+  
+  .spinner {
+    @apply border-4 border-gray-600 border-t-accent rounded-full w-12 h-12 animate-spin-slow;
+  }
+  
+  .loading-container {
+    @apply bg-card-bg border border-border-color rounded-xl p-8 text-center shadow-xl;
+  }
+  
+  .error-message {
+    @apply text-accent font-semibold bg-red-900/20 border border-red-800 rounded-lg p-4;
+  }
+  
+  .samurai-title {
+    @apply text-4xl md:text-5xl font-bold text-center mb-2 bg-gradient-to-r from-text-primary via-accent to-text-primary bg-clip-text text-transparent;
+  }
+  
+  .subtitle {
+    @apply text-xl md:text-2xl text-center text-accent font-semibold;
+  }
+}

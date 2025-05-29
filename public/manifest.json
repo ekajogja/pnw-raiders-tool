@@ -1,0 +1,47 @@
+{
+  "name": "Politics & War Raiders Tool",
+  "short_name": "PnW Raiders",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "Advanced target finder for Politics & War raiders and beige hunting",
+  "lang": "en",
+  "dir": "auto",
+  "theme_color": "#dc2626",
+  "background_color": "#0f0f0f",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "description": "Politics & War Raiders Tool interface"
+    }
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Find Raid Targets",
+      "url": "/?action=raid",
+      "description": "Quick access to raid target finder"
+    },
+    {
+      "name": "Find Beige Targets", 
+      "url": "/?action=beige",
+      "description": "Quick access to beige target finder"
+    }
+  ]
+}
