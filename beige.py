@@ -221,7 +221,7 @@ def get_raid_targets(api_key: str, nation_id: int, limit: int, max_pages: int): 
                     'daily_income': nation.get('gross_national_income', 0) / 365.0 if nation.get('gross_national_income') else 0,
                     'raw_gni': nation.get('gross_national_income'),  # For debugging
                     'nation_url': f"https://politicsandwar.com/nation/id={nation.get('id')}", # Added
-                    'city_count': nation.get('city_count', '?'),
+                    'num_cities': nation.get('num_cities', '?'),
                     'soldiers': nation.get('soldiers', 0),
                     'tanks': nation.get('tanks', 0),
                     'aircraft': nation.get('aircraft', 0),
@@ -362,7 +362,8 @@ def main():
         for i, t in enumerate(filtered, 1):
             nation_url = f"https://politicsandwar.com/nation/id={t['id']}"
             print(f"{i}. {t['name']} | {t['alliance']}")
-            print(f"  Score: {t['score']:,.2f} | Daily income: ${t.get('daily_income', 0):,.2f}")
+            print(f"  Score: {t['score']:,.2f} | Cities: {t.get('num_cities', 'N/A')}")
+            print(f"  Daily income: ${t.get('daily_income', 0):,.2f}")
             print(f"  Money stolen last 7d: {format_money(t['seven_days_stolen'])}")
             print(f"  Beige turns: {t.get('beige_turns', 0)}")
 

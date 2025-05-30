@@ -1,71 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Target Results</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nation-card {
+            transition: all 0.3s ease;
+        }
+        .nation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .beige-turns {
+            background-color: #78350f;
+            color: white;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body>
-    <center><h3>{{ search_title }}</h3></center>
-
-    {% if error_message %}
-        <p style="color: red;">Error: {{ error_message }}</p>
-    {% endif %}
-
-    {% if targets %}
-    <div class="cards-container">
-        {% for target in targets %}
-        <div class="nation-card">
-            <h3><a href="{{ target.nation_url }}" target="_blank">{{ target.name }} <!--({{ target.id }})--></a></h3>
-            <p><strong>Alliance:</strong> {{ target.alliance if target.alliance else 'N/A' }}</p>
-            <p><strong>Score:</strong> {{ "{:,.2f}".format(target.score) if target.score is not none else 'N/A' }}</p>
-            <p><strong>GNI:</strong> ${{ "{:,.0f}".format(target.gni) if target.gni is not none else 'N/A' }}</p>
-            <p><strong>Daily Income:</strong> ${{ "{:,.0f}".format(target.daily_income) if target.daily_income is not none else 'N/A' }}</p>
-            <!-- disable City Count and Infra for now
-            <p><strong>City Count:</strong> {{ target.city_count if target.city_count is not none else 'N/A' }}</p>
-            <p><strong>Infrastructure:</strong> {{ "{:,.0f}".format(target.infrastructure) if target.infrastructure is defined and target.infrastructure is not none else 'N/A' }}</p>
-            -->
-            <p><strong>Defensive Wars:</strong> {{ target.defensive_wars_count if target.defensive_wars_count is not none else 'N/A' }}</p>
-            
-            {% if target.beige_turns is defined %}
-            <p style="background-color: brown; color: white;"><strong>Beige Turns:</strong> {{ target.beige_turns }}</p>
+<body class="h-full bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">{{ search_title }}</h1>
+            {% if error_message %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-xl mx-auto">
+                    {{ error_message }}
+                </div>
             {% endif %}
+        </header>
 
-            <p><strong>7d Stolen:</strong> ${{ "{:,.0f}".format(target.seven_days_stolen) if target.seven_days_stolen is not none else 'N/A' }}</p>
-            {% if target.one_day_stolen is defined %}
-            <p><strong>1d Stolen:</strong> ${{ "{:,.0f}".format(target.one_day_stolen) if target.one_day_stolen is not none else 'N/A' }}</p>
-            {% endif %}
-            
-            <!-- disable Last Stolen Info for now
-            <p><strong>Last Stolen Info:</strong> 
-                {% if target.money_stolen_recent_def_war > 0 %}
-                    ${"{:,.0f}".format(target.money_stolen_recent_def_war)} - {{ target.last_stolen_time_ago_str }}
-                {% else %}
-                    N/A
-                {% endif %}
-            </p>
-            -->
-            
-            <div class="card-section">
-                <h4>Military</h4>
-                <p>Sol: {{ "{:,.0f}".format(target.soldiers) if target.soldiers is not none else 'N/A' }} | Tnks: {{ "{:,.0f}".format(target.tanks) if target.tanks is not none else 'N/A' }} | Air: {{ "{:,.0f}".format(target.aircraft) if target.aircraft is not none else 'N/A' }} | Shps: {{ "{:,.0f}".format(target.ships) if target.ships is not none else 'N/A' }}</p>
-                <p>Miss: {{ "{:,.0f}".format(target.missiles) if target.missiles is not none else 'N/A' }} | Nukes: {{ "{:,.0f}".format(target.nukes) if target.nukes is not none else 'N/A' }} | Spies: {{ "{:,.0f}".format(target.spies) if target.spies is not none else 'N/A' }}</p>
+        {% if targets %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for target in targets %}
+            <div class="nation-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+                <div class="p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">
+                        <a href="{{ target.nation_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                            {{ target.name }}
+                        </a>
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Alliance</p>
+                            <p class="font-medium">{{ target.alliance if target.alliance else 'N/A' }}</p>
+                        </div>
+                    <div>
+                        <p class="text-gray-600 text-sm">Score</p>
+                        <p class="font-medium">{{ target.score if target.score is not none else 'N/A' }}</p>
+                    </div>
+                        <div>
+                            <p class="text-gray-600 text-sm">Cities</p>
+                            <p class="font-medium">{{ target.city_count if target.city_count is not none else 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 text-sm">Def Wars</p>
+                            <p class="font-medium">{{ target.defensive_wars_count if target.defensive_wars_count is not none else 'N/A' }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-gray-600 text-sm">Income</p>
+                        <p class="font-medium">${{ target.daily_income if target.daily_income is not none else 'N/A' }}/day</p>
+                    </div>
+                    
+                    {% if target.beige_turns is defined %}
+                    <div class="mb-4">
+                        <span class="beige-turns">Beige Turns: {{ target.beige_turns }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-4">
+                        <p class="text-gray-600 text-sm">Stolen Money</p>
+                        <p class="font-medium">7d: ${{ target.seven_days_stolen if target.seven_days_stolen is not none else 'N/A' }}</p>
+                        {% if target.one_day_stolen is defined %}
+                        <p class="font-medium">1d: ${{ target.one_day_stolen if target.one_day_stolen is not none else 'N/A' }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-4 mb-4">
+                        <h4 class="font-semibold text-gray-700 mb-2">Military</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+        <div>Soldiers: {{ target.soldiers if target.soldiers is not none else 'N/A' }}</div>
+        <div>Tanks: {{ target.tanks if target.tanks is not none else 'N/A' }}</div>
+        <div>Aircraft: {{ target.aircraft if target.aircraft is not none else 'N/A' }}</div>
+        <div>Ships: {{ target.ships if target.ships is not none else 'N/A' }}</div>
+        <div>Missiles: {{ target.missiles if target.missiles is not none else 'N/A' }}</div>
+        <div>Nukes: {{ target.nukes if target.nukes is not none else 'N/A' }}</div>
+        <div>Spies: {{ target.spies if target.spies is not none else 'N/A' }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-4 mb-6">
+                        <h4 class="font-semibold text-gray-700 mb-2">Commerce</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div>Markets: {{ target.supermarket if target.supermarket is not none else 'N/A' }}</div>
+                            <div>Banks: {{ target.bank if target.bank is not none else 'N/A' }}</div>
+                            <div>Malls: {{ target.shopping_mall if target.shopping_mall is not none else 'N/A' }}</div>
+                            <div>Stadiums: {{ target.stadium if target.stadium is not none else 'N/A' }}</div>
+                            <div>Subways: {{ target.subway if target.subway is not none else 'N/A' }}</div>
+                        </div>
+                    </div>
+                    
+                    <a href="{{ target.nation_url }}" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded transition duration-200">
+                        View Nation
+                    </a>
+                </div>
             </div>
-            
-            <div class="card-section">
-                <h4>Commerce</h4>
-                <p>Mrkt: {{ target.supermarket if target.supermarket is not none else 'N/A' }} | Bnk: {{ target.bank if target.bank is not none else 'N/A' }} | Mall: {{ target.shopping_mall if target.shopping_mall is not none else 'N/A' }}</p>
-                <p>Stad: {{ target.stadium if target.stadium is not none else 'N/A' }} | Sub: {{ target.subway if target.subway is not none else 'N/A' }}</p>
-            </div>
-            
-            <a href="{{ target.nation_url }}" class="button view-button" target="_blank" style="display: inline-block; margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">View Nation</a>
+            {% endfor %}
         </div>
-        {% endfor %}
+        {% elif not error_message %}
+        <div class="bg-white rounded-lg shadow p-8 text-center max-w-xl mx-auto">
+            <p class="text-gray-700 text-lg">No targets found matching your criteria.</p>
+        </div>
+        {% endif %}
+        
+        <div class="mt-8 text-center">
+            <a href="/" class="inline-block bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                Back to Search
+            </a>
+        </div>
     </div>
-    {% elif not error_message %} 
-        <p>No targets found matching your criteria.</p>
-    {% endif %}
-    <br>
-    <center><a href="/"><button style="font-size: 1.2rem; background-color: black; color: white;">Back to Search</button></a></center>
 </body>
 </html>

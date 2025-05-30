@@ -1,41 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PnW Target Finder</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<script>navigator.serviceWorker.register("service-worker.js")</script> 
-<link rel="manifest" href="manifest.json" />    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>navigator.serviceWorker.register("service-worker.js")</script> 
+    <link rel="manifest" href="manifest.json" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
-    <center>
-        <h1>Politics & War <span style="color: red;">Raiders' Tool</span></h1>
-        <hr>
-        &nbsp;
-        <form style="font-size: 1.2rem;">
-            <div>
-                <label for="nation_id">Your Nation ID:</label>
-                <input type="number" id="nation_id" name="nation_id" required>
-            </div>
-            <br>
-            <div>
-                <button style="font-size: 1.2rem; background-color: green; margin-right: 20px;" type="submit" formaction="/raid" formmethod="post" id="raid-btn">Find Raid Targets</button>
-                <button style="font-size: 1.2rem; background-color: brown;" type="submit" formaction="/beige" formmethod="post" id="beige-btn">Find Beige Targets</button>
-                <div id="nation-warning" style="color: red; display: none;">Nation ID is required</div>
-            </div>
-        </form>
+<body class="h-full bg-gray-100 flex flex-col">
+    <div class="flex-grow container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+                Politics & War <span class="text-red-600">Raiders' Tool</span>
+            </h1>
+            <hr class="my-4 border-gray-300">
+        </header>
 
-        <div id="loading-indicator" style="display:none; text-align: center; padding: 20px; border: 1px solid #ccc; margin-top: 20px; background-color: #f9f9f9;">
-            <p><strong>Please wait. Don't click any button or reload this page.</strong><br>Search process can take up to 3 minutes to get live data from Politics & War server.</p>
-            <div class="spinner" style="margin: 20px auto;"></div> <!-- This div will be styled into a spinner with CSS -->
-            <p>Loading up to 5,000 nations data...</p>
+        <main class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+            <form>
+                <div class="mb-4">
+                    <label for="nation_id" class="block text-gray-700 font-medium mb-2">
+                        Your Nation ID:
+                    </label>
+                    <input type="number" id="nation_id" name="nation_id" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div id="nation-warning" class="text-red-500 mb-4 hidden">
+                    Nation ID is required
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                    <button type="submit" formaction="/raid" formmethod="post" id="raid-btn"
+                        class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded transition duration-200">
+                        Find Raid Targets
+                    </button>
+                    <button type="submit" formaction="/beige" formmethod="post" id="beige-btn"
+                        class="flex-1 bg-yellow-700 hover:bg-yellow-800 text-white font-bold py-3 px-4 rounded transition duration-200">
+                        Find Beige Targets
+                    </button>
+                </div>
+            </form>
+
+            <div id="loading-indicator" class="hidden text-center p-6 border border-gray-200 bg-gray-50 rounded-lg">
+                <p class="font-bold text-gray-700 mb-3">
+                    Please wait. Don't click any button or reload this page.
+                </p>
+                <p class="text-gray-600 mb-4">
+                    Search process can take up to 3 minutes to get live data from Politics & War server.
+                </p>
+                <div class="spinner mx-auto"></div>
+                <p class="mt-4 text-gray-600">Loading up to 5,000 nations data...</p>
+            </div>
+        </main>
+    </div>
+
+    <footer class="mt-auto py-6 bg-gray-800 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <hr class="border-gray-700 mb-4">
+            <p>
+                Built with ❤️ by 
+                <a href="https://politicsandwar.com/nation/id=684074" target="_blank" class="text-green-400 hover:text-green-300">
+                    Bako Gayo
+                </a>, the dastard 
+                <a href="https://politicsandwar.com/alliance/id=10304" target="_blank" class="text-red-400 hover:text-red-300">
+                    Samurai
+                </a>.
+            </p>
         </div>
-
-        <footer style="margin-top: 50px;">
-            <hr>
-            <p>Built with ❤️ by <a style="color: green;" href="https://politicsandwar.com/nation/id=684074" target="_blank">Bako Gayo</a>, the dastard <a style="color: red;" href="https://politicsandwar.com/alliance/id=10304" target="_blank">Samurai</a>.</p>
-        </footer>
-    </center>
+    </footer>
 
     <script>
         $(document).ready(function() {
@@ -44,14 +93,14 @@
                     e.preventDefault();
                     return false;
                 }
-                $('#loading-indicator').show();
+                $('#loading-indicator').removeClass('hidden').show();
                 return true;
             });
 
             function validateForm() {
                 const nationId = $('#nation_id').val();
                 if (!nationId) {
-                    $('#nation-warning').show();
+                    $('#nation-warning').removeClass('hidden').show();
                     return false;
                 }
                 $('#nation-warning').hide();
