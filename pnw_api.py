@@ -146,6 +146,7 @@ def get_nation_by_id(api_key: str, nation_id: int):
           id
           nation_name
           score
+          num_cities
           soldiers
           tanks
           aircraft
@@ -229,6 +230,7 @@ def get_nations(api_key: str, page=1):
           id
           nation_name
           score
+          num_cities
           alliance_id
           vacation_mode_turns
           beige_turns

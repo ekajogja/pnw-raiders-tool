@@ -104,6 +104,10 @@ def get_raid_targets(api_key: str, nation_id: int, limit: int, max_pages: int): 
                 if include_nation and nation.get('vacation_mode_turns', 0) > 0:
                     include_nation = False
                     
+                # Exclude nations with more cities than us
+                if include_nation and nation.get('num_cities', 0) > my_nation.get('num_cities', 0):
+                    include_nation = False
+                    
                 if include_nation and nation.get('color', '').lower() == 'beige':
                     include_nation = False
 
